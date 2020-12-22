@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>CodePen - Loading Bar</title>
+
+<style>
+	*{margin:0;
+	padding:0;
+	list-style-type:none;}
+a,img{border:0;}
+
+body {
+  background-color: #b5ce9f;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font: 1.5rem Roboto, sans-serif;
+  font-weight: 900;
+  padding-bottom: 1rem;
+}
+h1 span {
+  animation: load-text 1s infinite cubic-bezier(0.1, 0.15, 0.9, 1);
+  display: inline-block;
+}
+
+.progress-bar {
+  background-color: #eaeaea;
+  width: 300px;
+  height: 25px;
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.25), 0px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  position: relative;
+}
+.progress-bar:after {
+  content: "";
+  background-color: green;
+  position: absolute;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  animation: load 4s infinite linear;
+}
+
+/*** KEYFRAMES ***/
+@keyframes load {
+  0% {
+    width: 5%;
+    background-color: red;
+  }
+  25% {
+    background-color: orange;
+  }
+  50% {
+    background-color: yellow;
+  }
+  75% {
+    background-color: lightgreen;
+  }
+  90% {
+    background-color: green;
+    width: 100%;
+  }
+}
+@keyframes load-text {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>
+  <span>L</span>
+  <span>O</span>
+  <span>A</span>
+  <span>D</span>
+  <span>I</span>
+  <span>N</span>
+  <span>G</span>
+  <span>.</span>
+  <span>.</span>
+  <span>.</span>
+</h1>
+<div class="progress-bar"></div>
+
+<script>
+	var letters = document.getElementsByTagName("SPAN");
+
+    for(var i = 0; i < letters.length; i++) {
+        letters[i].style.animationDelay = (i * 0.3) + 's';
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生js实现简单动画效果</title>
+    <style>
+        #nav{
+        	margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            background-color: #409eff;
+        }
+        
+        /*button{
+        	background-color: pink;
+        	
+        }*/
+    </style>
+</head>
+<body>
+<button onclick="run()">加宽</button>
+<div id="nav"></div>
+</body>
+<script>
+//需要应用动画效果的目标元素
+var elem = document.getElementById('nav');
+//动画配置，为了方便，这里只针对width属性，duration表示动画持续时间
+var options = {
+    width: '200px',
+    duration: 1000
+};
+//点击按钮启动动画
+function run(){
+    animate.call(elem, options);
+}
+//动画逻辑
+function animate(options){
+	//定时器
+	var timer = null;
+	//div的初始宽度和结束宽度
+	var startWidth = parseInt(window.getComputedStyle(elem)['width']);
+	var endWidth = parseInt(options.width);
+	
+	function createTime(){
+		//返回当前日期距1970年1月1日午夜（GMT 时间）之间的毫秒数，一种简化写法
+		return (+new Date);
+	}
+	var startTime = createTime();
+
+	function logic(){
+		//开始时间 + 持续时间 - 当前时间，结果即为动画的剩余时间，当剩余时间小于0则置0，表示动画结束
+		var remaining = Math.max(0, startTime + options.duration - createTime());
+		//remaining/duration即为动画剩余的百分比，用1去减，得到已执行的百分比
+		var percent = 1 - (remaining / options.duration); 
+		//（结束宽度 - 开始宽度）* 百分比 + 开始宽度，即为当前帧div的实际宽度
+		var nowWidth = ( endWidth - startWidth ) * percent + startWidth;
+		function setStyle(nowWidth){
+			elem.style['width'] = nowWidth + 'px';
+		}
+		if(percent === 1){
+			setStyle(nowWidth);
+			clearInterval(timer);
+			timer = null;
+		} else {
+			setStyle(nowWidth);
+		}
+	}
+	timer = setInterval(logic, 13);
+}
+</script>
+<html>
